@@ -20,8 +20,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
                 'write_only': True,
                 'style': {
                     'input_type': 'password',
-                }
-            }
+                },
+            },
         }
 
     def create(self, validated_data):
@@ -42,3 +42,16 @@ class UserProfileSerializer(serializers.ModelSerializer):
             instance.set_password(password)
 
         return super().update(instance, validated_data)
+
+
+class UserProfileFeedItemSerializer(serializers.ModelSerializer):
+    """Serialize a profile feed item"""
+
+    class Meta:
+        model = models.UserProfileFeedItem
+        fields = ('id', 'user_profile', 'status_text', 'created_on')
+        extra_kwargs = {
+            'user_profile': {
+                'read_only' : True,
+            },
+        }
